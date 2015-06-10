@@ -1,0 +1,136 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiddos Lens - Admin</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/tp2/Public/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/tp2/Public/css/dashboard.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation bar fixed on top -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav><!-- Navigation bar end -->
+    
+    <!-- Main container -->
+    <div class="container-fluid">
+      <div class="row">
+      
+        <div class="col-sm-3 col-md-2 sidebar"><!-- sidebar -->
+          <ul class="nav nav-sidebar">
+            <li><a href="#">Member Management</a></li>
+            <li><a href="#">Order Management</a></li>
+            <li><a href="#">Product Mangement</a></li>
+            <ul>
+              <li><a href="#">Add Product</a></li>
+              <li><a href="#">Edit Product</a></li>
+            </ul>
+          </ul>
+        </div><!-- sidebar end -->
+        
+        <!-- main content area -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <form class="form-horizontal" action="<?php echo U('Product/add');?>" method="post">
+          <div class="form-group login-hint">
+            <h2>Kiddos Lens - New Product</h2>
+            <div class="alert alert-success" role="alert">Please fill out all the blanks.</div>
+          </div>
+          <div class="form-group">
+            <label for="brand" class="col-md-3 col-sm-2 control-label">Brand</label>
+            <div class="col-md-9 col-sm-10">
+              <select name="brand" id="brand">
+                <option value="na">-Please select-</option>
+                <option value="sony/zeiss">Sony/Zeiss</option>
+                <option value="sony">Sony</option>
+                <option value="sigma">Sigma</option>
+                <option value="tamron">Tamron</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="productname" class="col-md-3 col-sm-2 control-label">Product Name</label>
+            <div class="col-md-9 col-sm-10">
+              <input type="text" class="form-control" name="product_name" id="productname" placeholder="Product Name" maxlength="60">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="model" class="col-md-3 col-sm-2 control-label">Model</label>
+            <div class="col-md-9 col-sm-10">
+              <input type="text" class="form-control" name="model" id="model" placeholder="Model Name" maxlength="30" style="text-transform:uppercase;" >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="category" class="col-md-3 col-sm-2 control-label">Category</label>
+            <div class="col-md-9 col-sm-10">
+              <label for="prime">Prime Lens&nbsp;</label><input type="checkbox" id="prime" name="cat[]" value="Prime">
+              <label for="zoom">Zoom Lens&nbsp;</label><input type="checkbox" id="zoom" name="cat[]" value="Zoom">
+              <label for="telephoto">Telephoto Lens&nbsp;</label><input type="checkbox" id="telephoto" name="cat[]" value="Telephoto">
+              <label for="wideangle">Wide Angle Lens&nbsp;</label><input type="checkbox" id="wideangle" name="cat[]" value="Wide Angle">
+              <label for="marco">Marco Lens&nbsp;</label><input type="checkbox" id="marco" name="cat[]" value="Marco">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="mount" class="col-md-3 col-sm-2 control-label">Mount</label>
+            <div class="col-md-9 col-sm-10">
+              <select name="mount" id="mount">
+                <option value="na">-Please select-</option>
+                <option value="e-mount">E-Mount</option>
+                <option value="a-mount">A-Mount</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="price" class="col-md-3 col-sm-2 control-label">Price</label>
+            <div class="col-md-9 col-sm-10">
+              <input type="text" class="form-control" name="price" id="price" placeholder="Price 000.00" maxlength="8">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="releasedate" class="col-md-3 col-sm-2 control-label">Release Date</label>
+            <div class="col-md-9 col-sm-10">
+              <input type="date" class="form-control" name="release_date" id="releasedate">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="image" class="col-md-3 col-sm-2 control-label">Image</label>
+            <div class="col-md-9 col-sm-10">
+              <input type="text" class="form-control" name="image" id="image" placeholder="Image URL" maxlength="100">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-3 col-md-9 col-sm-offset-2 col-sm-10">
+              <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+          </div>
+        </form>  
+        </div><!-- main content end -->
+        
+      </div>
+    </div><!-- Container end  -->
+
+</body>
+</html>

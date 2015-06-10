@@ -1,0 +1,58 @@
+<extend name="Public:base_left" />
+
+<block name="title"><title>{$title}</title></block>
+
+<block name="user">
+            <if condition="$name">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {$name}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{:U('User/viewProfile')}">My Profile</a></li>
+                <li><a href="{:U('Product/viewCart')}">My Cart</a></li>
+                <li><a href="{:U('Order/orderList')}">My Orders</a></li>
+              </ul>
+            </li><!-- 1st link list item -->
+            <li><a href="{:U('Product/viewCart')}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/logout')}">Sign Out</a></li><!-- 1st link list item -->
+            <else />
+            <li><a href="{:U('User/login')}">Sign IN</a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/register')}">Register</a></li><!-- 1st link list item -->
+            </if>
+</block>
+
+<block name="main">
+      <div class="col-lg-10"><!-- right content -->
+        <div class="panel panel-default"><!-- panel -->
+          <div class="panel-heading">
+            <h3 class="panel-title">Review Order</h3>
+          </div>
+          <div class="panel-body"><!-- panel body -->
+            <p>Total Qty: {$total['total_qty']}</p>
+            <p>Total Amount: CND$ {$total['total_price']}</p>
+            <table class="table table-hover">
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+              </tr>
+              <volist name="output" id="data">
+              <tr>
+                <td><a href="{:U('Product/view', array('productId'=>$data['id']))}">{$data['brand']} {$data['product_name']}</a></td>
+                <td>CND ${$data['price']}</td>
+                <td>{$data['qty']}</td>
+              </tr>
+              </volist>
+            </table>
+            <div>
+              <if condition="$direct">
+              <a href="{:U('Product/viewCart')}" class="btn btn-primary">Cancel</a>
+              <a href="{:U('Order/addOrder')}" class="btn btn-success">Place Order</a>
+              <else />
+              <a href="{:U('Product/viewCart')}" class="btn btn-primary">Back to Cart</a>
+              <a href="{:U('Order/addOrder')}" class="btn btn-success">Place Order</a>
+              </if>
+            </div>
+          </div><!-- panel body -->
+        </div><!-- panel -->
+      </div><!-- right content -->
+</block>

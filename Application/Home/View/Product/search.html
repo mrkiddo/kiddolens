@@ -1,0 +1,195 @@
+<extend name="Public:base" />
+
+<block name="title"><title>Kiddos Lens - Product: {$product['product_name']}</title></block>
+
+<block name="user">
+            <if condition="$name">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {$name}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{:U('User/viewProfile')}">My Profile</a></li>
+                <li><a href="{:U('Product/viewCart')}">My Cart</a></li>
+                <li><a href="{:U('Order/orderList')}">My Orders</a></li>
+              </ul>
+            </li><!-- 1st link list item -->
+            <li><a href="{:U('Product/viewCart')}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/logout')}">Sign Out</a></li><!-- 1st link list item -->
+            <else />
+            <li><a href="{:U('User/login')}">Sign IN</a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/register')}">Register</a></li><!-- 1st link list item -->
+            </if>
+</block>
+
+<block name="left">
+      <div class="col-lg-3 cat-left filter">
+        <h4>Filter by</h4>
+        <div class="checkbox">
+ 		 <label>
+           <input type="checkbox" class="check-mount" id="a-mount" name="mount" value="a-mount">
+           A-Mount Lens
+         </label>
+       </div>
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" class="check-mount" id="e-mount" name="mount" value="e-mount">
+           E-Mount Lens
+         </label><hr>
+       </div>
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" class="check-type" id="prime" name="len-mutex" value="prime">
+           Prime Lens
+         </label>
+       </div>
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" class="check-type" id="zoom" name="len-mutex" value="zoom">
+           Zoom Lens
+         </label>
+       </div>
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" class="check-type" id="telephoto" value="telephoto">
+           Telephoto Lens
+         </label><hr>
+       </div>
+        <div class="checkbox">
+ 		 <label>
+    	   <input type="checkbox" class="check-type" name="price-mutex" id="priceAsc" value="price-asc" aria-label="">
+           Price: Low to High
+         </label>
+        </div>
+        <div class="checkbox">
+ 		 <label>
+    	   <input type="checkbox" class="check-type" name="price-mutex" id="priceDesc" value="price-desc" aria-label="">
+           Price: High to Low
+         </label>
+        </div>
+      </div>
+</block>
+
+<block name="main">
+      <div class="col-lg-9 item-wrapper"><!-- item wrapper -->
+
+        <div class="cat-info">
+          <h3 class="search-title">Category: E-Mount Lens</h3>
+          <div class="alert alert-info" role="alert"><strong class="item-num">10</strong> Lens in total.</div>
+        </div>
+
+      </div><!-- item wrapper -->
+</block>
+
+<block name="add-js">
+<script src="__PUBLIC__/js/handlebars.js"></script>
+<script src="__PUBLIC__/js/handlebars-jquery.js"></script>
+<script id="productTmpl" type="text/x-handlebars-template">
+	{{#each products}}
+		<div class="col-lg-3 cat-item" mount="{{mount}}">
+          <div class="thumbnail">
+            <img src="img/holder242x200.jpg" width="100%" alt="">
+            <div class="caption">
+              <p class="product-name"><a href="{{product_link}}">{{product_name}}</a></p>
+              <p>{{brand}}</p>
+              <p>CDN ${{price}}</p>
+              <p class="text-center"><a href="" class="btn btn-primary btn-sm"> + Add to Cart</a></p>
+            </div>
+          </div>
+        </div>
+	{{/each}}
+</script>
+<script>
+	
+	$(document).ready(function() {
+		
+		function filterPressHandler(e) {
+			//clear the checked status for mutex checkbox
+			//console.log($(this).prop('checked'));
+			if($(this).prop('checked') == false) {
+				$(this).prop("checked", false);
+				return false;
+			}
+			
+			if($(this).attr('name') == 'mount') {
+				$('input[name="mount"]').prop('checked', false);
+			}
+			if($(this).attr('name') == 'len-mutex') {
+				$('input[name="len-mutex"]').prop('checked', false);
+			}
+			if($(this).attr('name') == 'price-mutex') {
+				$('input[name="price-mutex"]').prop('checked', false);
+			}
+			//activate the checked status
+			$(this).prop('checked', true);
+	        //output the checkbox result
+			var value = new Array();
+			var mount = "";
+			mount = $("input.check-mount[type='checkbox']:checked").val();
+			if(mount == undefined) {
+				mount = '0';
+			}
+			$("input.check-type[type='checkbox']:checked").each(function(){
+				value.push($(this).val());
+			});
+			if(value.length == 0) {
+				value.push('');
+			}
+			console.log(mount);
+			console.log(value);
+			
+			var url = $('form.search-form').attr('action');
+			$.post(url, {
+				mount: mount,
+				type: value
+			}, function(data, statusTxt){
+				if(data.status == '1') {
+					console.log(data);
+					$("div.item-wrapper").html("");
+					var template = $("#productTmpl").template(data).appendTo("div.item-wrapper");
+					//deal with checkbox status when data successfully loaded
+					console.log(data.query);
+					mount = data.query.mount;
+					type = data.query.type;
+					$("#"+ mount).prop("checked", true);
+					for(i = 0; i<type.length; i++) {
+						console.log(type[i]);
+						$("#"+ type[i]).prop("checked", true);
+					}
+				}
+			}, "json");
+			
+		}
+        
+		$(".filter input[type='checkbox']").bind('change', filterPressHandler);
+		
+		//test
+		//var value = new Array();
+		//value.push('zoom');
+		//value.push('telephoto');
+		
+		/*
+		var url = $('form.search-form').attr('action');
+		$.post(url, {
+			mount: '0',
+			type: ['zoom']
+		}, function(data, statusTxt){
+			if(data.status == '1') {
+				console.log(data);
+				$("div.item-wrapper").html("");
+				var template = $("#productTmpl").template(data).appendTo("div.item-wrapper");
+				//deal with checkbox status when data successfully loaded
+				console.log(data.query);
+				mount = data.query.mount;
+				type = data.query.type;
+				$("#"+ mount).prop("checked", true);
+				for(i = 0; i<type.length; i++) {
+					console.log(type[i]);
+					$("#"+ type[i]).prop("checked", true);
+				}
+			}
+		}, "json");
+		*/
+		
+    });
+	
+</script>
+</block>

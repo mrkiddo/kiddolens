@@ -1,0 +1,114 @@
+<extend name="Public:category" />
+
+<block name="title"><title>{$title}</title></block>
+
+<block name="user">
+            <if condition="$name">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {$name}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{:U('User/viewProfile')}">My Profile</a></li>
+                <li><a href="{:U('Product/viewCart')}">My Cart</a></li>
+                <li><a href="{:U('Order/orderList')}">My Orders</a></li>
+              </ul>
+            </li><!-- 1st link list item -->
+            <li><a href="{:U('Product/viewCart')}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/logout')}">Sign Out</a></li><!-- 1st link list item -->
+            <else />
+            <li><a href="{:U('User/login')}">Sign IN</a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/register')}">Register</a></li><!-- 1st link list item -->
+            </if>
+</block>
+
+<block name="cat-img">
+  <img src="__PUBLIC__/img/holder242x200.jpg" width="100%" alt="lens category">
+</block>
+
+<block name="cat-description">
+  <if condition="$message['status']">
+  <p>E-Mount is skfjsdlkfjkdsljfkdsjfkl;awejfk;ljweafjldsafiojas</p>
+  <p class="text-center"><a class="btn btn-primary" href="">View all {$message['type']}</a></p>
+  <else />
+  <p>A-Mount</p>
+  <p class="text-center"><a class="btn btn-primary" href="">View all {$message['type']}</a></p>
+  </if>
+</block>
+
+<block name="top-title">
+  <hr>
+  <h4>Top {$message['type']}</h4>
+</block>
+
+<block name="top-sell">
+  
+  <volist name="top" id="data">
+  <div class="col-md-4 top-item" data-mount="{$data.mount}" data-brand="{$data.brand}"><!-- top product item -->
+    <div class="thumbnail" style="background-image:url(__PUBLIC__/img/holder242x200.jpg)">
+      <div class="caption">
+       <p class="item-name"><strong>{$data.brand} - {$data.product_name}</strong></p>
+       <ul>
+         <li></li>
+       </ul>
+       <p class="text-center"><a href="{:U('Product/view', array('productId'=>$data['id']))}" class="btn btn-success">Click for more details</a></p>
+      </div>
+    </div>
+  </div><!-- top product item -->
+  </volist>
+</block>
+
+<block name="types-title">
+  <hr>
+  <h4>Diversity of {$message['type']}</h4>
+</block>
+
+<block name="types">
+  <div class="col-lg-12">
+    <if condition="$message['status']">
+    <p>From kjkdfj to odfjkdj, E-Mount Lens ...</p>
+    <else />
+    <p>From kjkdfj to odfjkdj, A-Mount Lens ...</p>
+    </if>
+  </div>
+  <div class="col-md-3 type-item"><!-- type product item -->
+    <div class="thumbnail">
+      <div class="caption">
+       <p>Prime Lens in {$message['type']}</p>
+       <p>Single focal point .... </p>
+       <p>Best for kjkdfjdkf
+       </p>
+       <p class="text-center"><a href="" class="btn btn-success">Dicover</a></p>
+      </div>
+    </div>
+  </div><!-- type product item -->
+  <div class="col-md-3 type-item"><!-- type product item -->
+    <div class="thumbnail">
+      <div class="caption">
+       <p>Zoom Lens in {$message['type']}</p>
+       <p>Single focal point .... </p>
+       <p>Best for kjkdfjdkf
+       </p>
+       <p class="text-center"><a href="" class="btn btn-success">Dicover</a></p>
+      </div>
+    </div>
+  </div><!-- type product item --><div class="col-md-3 type-item"><!-- type product item -->
+    <div class="thumbnail">
+      <div class="caption">
+       <p>Telephoto Lens in {$message['type']}</p>
+       <p>Various focal point .... </p>
+       <p>Best for kjkdfjdkf
+       </p>
+       <p class="text-center"><a href="" class="btn btn-success">Dicover</a></p>
+      </div>
+    </div>
+  </div><!-- type product item --><div class="col-md-3 type-item"><!-- type product item -->
+    <div class="thumbnail">
+      <div class="caption">
+       <p>Special Lens in {$message['type']}</p>
+       <p>Single focal point .... </p>
+       <p>Best for kjkdfjdkf
+       </p>
+       <p class="text-center"><a href="" class="btn btn-success">Dicover</a></p>
+      </div>
+    </div>
+  </div><!-- type product item -->
+</block>

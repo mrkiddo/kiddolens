@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+  <form action="{:U("Product/lookup")}" method="post">
+    <p>Product Lookup</p>
+    <p></p>
+    <label for="keyword">Keyword</label>
+    <input type="text" name="keyword" id="keyword" />
+    <label for="type">Search Type</label>
+    <select name="type" id="type">
+      <option value="id">Product ID</option>
+      <option value="brand">Brand</option>
+      <option value="product_name">Product Name</option>
+      <option value="model">Model</option>
+      <option value="category">Category</option>
+    </select>
+    <input type="submit" value="Search" />
+  </form>
+  
+  <p><a href="{:U('Product/add')}">Add new product</a></p>
+
+</body>
+</html>

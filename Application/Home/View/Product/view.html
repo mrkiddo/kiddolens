@@ -1,0 +1,114 @@
+<extend name="Public:base_product" />
+
+<block name="title"><title>Kiddos Lens - Product: {$product['product_name']}</title></block>
+
+<block name="user">
+            <if condition="$name">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {$name}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{:U('User/viewProfile')}">My Profile</a></li>
+                <li><a href="{:U('Product/viewCart')}">My Cart</a></li>
+                <li><a href="{:U('Order/orderList')}">My Orders</a></li>
+              </ul>
+            </li><!-- 1st link list item -->
+            <li><a href="{:U('Product/viewCart')}"><span class="glyphicon glyphicon-shopping-cart cart-logo" aria-hidden="true"></span></a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/logout')}">Sign Out</a></li><!-- 1st link list item -->
+            <else />
+            <li><a href="{:U('User/login')}">Sign IN</a></li><!-- 1st link list item -->
+            <li><a href="{:U('User/register')}">Register</a></li><!-- 1st link list item -->
+            </if>
+</block>
+
+<block name="left">
+      <div class="col-lg-3 product-img"><!-- col -->
+        <a href="#" class="thumbnail">
+      	  <img src="img/holder300x200.jpg" alt="...">
+        </a>
+      </div><!-- col -->
+</block>
+
+<block name="main">
+      <div class="col-lg-6"><!-- col -->
+        <h3>{$product['product_name']}</h3>
+        <p>{$product['brand']}</p>
+        <p>{$product['model']}</p>
+        <p>Release date: {$product['release_date']}</p>
+        <p><span class="lead">CDN$<mark>{$product['price']}</mark></span></p>
+        <hr>
+        <p><strong>Product Availability:</strong></p>
+        <div class="alert alert-success" role="alert">On stock, ships in 3 business day.</div>
+        <p><strong>Special Offers:</strong></p>
+        <div class="alert alert-info" role="alert">No recent offers.</div>
+        <hr>
+        <p><strong>Product category:</strong></p>
+        <p>
+          <foreach name="product['category']" item="vo">
+            <span class="label label-default">{$vo} Lens</span>&nbsp;
+          </foreach>
+        </p>
+      </div><!-- col -->
+      
+      <div class="col-lg-3 product-panel"><!-- col -->
+         <ul class="list-group">
+  		   <li class="list-group-item add-cart-wrapper">
+             <p>Like this lens, click this</p>
+             <a class="btn-lg btn-primary add-cart" href="{:U('Product/addCart',array('productId'=>$product['id']))}" 
+             tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="" data-content="">Add to Cart</a>
+           </li>
+           <li class="list-group-item">
+             <p>Or directly place order for this lens</p>
+             <a class="btn-lg btn-primary" href="{:U('Order/directOrder', array('productId'=>$product['id']))}">Direct to order</a>
+           </li>
+         </ul>
+      </div><!-- col -->
+</block>
+
+<block name="product-detail">
+      <div class="col-lg-12" role="tabpanel"><!-- col -->
+        <hr>
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#overview" aria-controls="overview" data-toggle="tab" role="tab">Overview</a></li>
+  		  <li role="presentation"><a href="#specifications" aria-controls="specifications" data-toggle="tab" role="tab">Specifications</a></li>
+  		  <li role="presentation"><a href="#compatibility" aria-controls="compatibility" data-toggle="tab" role="tab">Compatibility</a></li>
+          <li role="presentation"><a href="#accessories" aria-controls="accessories" data-toggle="tab" role="tab">Accessories</a></li>
+		</ul> 
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="overview">Overview</div>
+          <div role="tabpanel" class="tab-pane" id="specifications">Specifications</div>
+          <div role="tabpanel" class="tab-pane" id="compatibility">Compatibility</div>
+          <div role="tabpanel" class="tab-pane" id="accessories">Accessories</div>
+        </div>  
+      </div><!-- col -->
+</block>
+
+<block name="add-js">
+<script>
+	
+	$(document).ready(function() {
+        
+		function addCartHandler(e){
+			e.preventDefault();
+			var url = $(this).attr('href');
+			var target = $(this);
+			//console.log(url);
+			$.post(url, {request: 1}, function(data, statusTxt){
+				if(data.status == '0') {
+					target.attr('title', 'Something happened!').attr("data-content", data.info).attr("data-placement", "left");
+					target.popover('show');
+					return false;
+				}
+				//console.log(data);
+				target.attr('title', 'Success!').attr("data-content", data.info).attr("data-placement", "left");
+				target.popover('show');
+				$("span.cart-logo").css('color', '#F60');
+			}, "json");
+		}
+		
+		$('a.add-cart').bind('click', addCartHandler);
+		
+    });
+	
+</script>
+</block>
